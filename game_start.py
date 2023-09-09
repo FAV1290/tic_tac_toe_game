@@ -5,58 +5,17 @@ import rich.console
 import rich.table
 
 
+from constants import PLATFORMS, ICONS, PLAYGROUND_SIZE, BRAINSTORM_MIN_SEC, BRAINSTORM_MAX_SEC
+
+
 def clear_screen() -> None:
-    platforms = {
-        'nt' : 'cls',
-        'posix' : 'clear',
-    }
-    _ = os.system(platforms.get(os.name, ''))
+    os.system(PLATFORMS.get(os.name, ''))
 
 
 def define_icons() -> tuple[str, str]:
-    user_icon = random.choice(['\u274c', '\u2b55'])
-    if user_icon == '\u274c':
-        ai_icon = '\u2b55'
-    else:
-        ai_icon = '\u274c'
+    random.shuffle(ICONS)
+    user_icon, ai_icon = ICONS[:2]
     return user_icon, ai_icon
-
-
-def check_user_input(raw_user_input: str) -> bool:
-    try:
-        user_input = int(raw_user_input.strip())
-    except ValueError:
-        return False
-    if 0 <= user_input < 10:
-        return True
-    return False
-
-
-def get_user_turn(playground: list[str], user_icon: str, ai_icon: str) -> int:
-    try:
-        user_input = input('Enter unfilled box number to make turn or 0 to exit game: ')
-    except RecursionError:
-        print('\rAre you kidding me? Too many incorrect values. The game will now shutdown')
-        return 0
-    if not check_user_input(user_input):
-        print('Incorrect value. Please try again...')
-        return get_user_turn(playground, user_icon, ai_icon)
-    if playground[int(user_input)-1] in [user_icon, ai_icon]: 
-        print('This box is not empty. Please try again...')
-        return get_user_turn(playground, user_icon, ai_icon)   
-    return int(user_input)
-
-
-def get_default_playground() -> list[str]:
-    return ['(1)', '(2)', '(3)', '(4)', '(5)', '(6)', '(7)', '(8)', '(9)'] 
-
-
-def draw_current_playground(playground: list[str]) -> None:
-    table = rich.table.Table(show_header = False)
-    console = rich.console.Console()
-    for index in range(0, len(playground), 3):
-        table.add_row(playground[index], playground[index+1], playground[index+2])    
-    console.print(table)
 
 
 def ai_makes_first_turn() -> bool:
@@ -64,23 +23,72 @@ def ai_makes_first_turn() -> bool:
 
 
 def toggle_ai_brainstorm() -> None:
-    time.sleep(3 + random.randint(0,3))
+    time.sleep(random.randint(BRAINSTORM_MIN_SEC, BRAINSTORM_MAX_SEC))
+
+
+def check_user_input(raw_user_input: str) -> bool:
+    try:
+        user_input = int(raw_user_input.strip())
+    except ValueError:
+        return False
+    if user_input in range(PLAYGROUND_SIZE ** 2 + 1):
+        return True
+    return False
+
+
+def get_default_playground() -> list[str]:
+    default_playground = []
+    for item in range(PLAYGROUND_SIZE ** 2):
+        default_playground.append(f'({item + 1})')
+    return default_playground
+
+
+def draw_current_playground(playground: list[str]) -> None:
+    table = rich.table.Table(show_header = False)
+    console = rich.console.Console()
+    for index in range(0, PLAYGROUND_SIZE ** 2, PLAYGROUND_SIZE):
+        table.add_row(playground[index], playground[index + 1], playground[index + 2])
+    clear_screen()    
+    console.print(table)
+
+
+def get_user_turn(playground: list[str], user_icon: str, ai_icon: str) -> int:
+    while True:
+        user_input = input('Enter unfilled box number to make turn or 0 to exit game: ')
+        if not check_user_input(user_input):
+            print('Incorrect value. Please try again...')
+        elif int(user_input) and playground[int(user_input)-1] in [user_icon, ai_icon]:
+            print('This box is already filled. Please try again...')
+        else:
+            return int(user_input)
+        
+
+def get_random_ai_turn(playground: list[str], user_icon: str, ai_icon: str) -> int:
+    ai_turn = None
+    while ai_turn is None or playground[ai_turn] in [user_icon, ai_icon]:
+        ai_turn = random.randint(0, PLAYGROUND_SIZE ** 2 - 1)
+    return ai_turn
+
+
+def make_ai_turn(playground: list[str], user_icon: str, ai_icon: str) -> list[str]:
+    toggle_ai_brainstorm()
+    ai_turn = get_random_ai_turn(playground, user_icon, ai_icon)
+    playground[ai_turn] = ai_icon
+    draw_current_playground(playground)
+    print('Done! Your turn now...')
+    return playground
 
 
 def main() -> None:
     user_icon, ai_icon = define_icons()
     playground = get_default_playground()
     game_on = True
-    clear_screen()
     draw_current_playground(playground)
-    print('Game on!', end=' ')
+    print(f'Game on! Your icon is {user_icon}, AI icon is {ai_icon}', end=' ')
+    
     if ai_makes_first_turn():
         print('AI makes the first turn! Please wait a sec...')
-        toggle_ai_brainstorm()
-        playground[random.randint(0,8)] = ai_icon
-        clear_screen()
-        draw_current_playground(playground)
-        print('Done! Your turn now...')
+        playground = make_ai_turn(playground, user_icon, ai_icon)
     else:
         print('You make the first turn!')
     while game_on:
@@ -89,13 +97,9 @@ def main() -> None:
             game_on = False
             continue
         playground[user_turn-1] = user_icon
-        clear_screen()
         draw_current_playground(playground)
-        print('Ok. And now AI will make his turn...')
-        toggle_ai_brainstorm()
-        clear_screen()
-        draw_current_playground(playground)
-        print('Done! Your turn now...')
+        print("Ok. And now AI will make it's turn...")
+        playground = make_ai_turn(playground, user_icon, ai_icon)
         
 
 if __name__ == '__main__':
