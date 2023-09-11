@@ -1,8 +1,8 @@
-PLATFORMS = {
-        'nt' : 'cls',
-        'posix' : 'clear',
-    }
-ICONS = [' X ', ' O ']
+CLEAR_SCREEN_COMMANDS_MAP = {
+    'nt' : 'cls',
+    'posix' : 'clear',
+}
+PLAYERS_ICONS = ['X', 'O']
 PLAYGROUND_SIZE = 3
-BRAINSTORM_MIN_SEC = 2  #default is 2
-BRAINSTORM_MAX_SEC = 4  #default is 4
+BRAINSTORM_MIN_SEC = 2
+BRAINSTORM_MAX_SEC = 4
