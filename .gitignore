@@ -20,7 +20,3 @@ __pycache__/
 
 #Json files
 *.json
-
-
-#Test script
-test.py
