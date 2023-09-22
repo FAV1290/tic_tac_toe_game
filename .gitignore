@@ -12,6 +12,8 @@ venv.bak
 
 # Cache
 __pycache__/
+.mypy_cache
+.pytest_cache
 
 
 # Logs

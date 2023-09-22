@@ -1,5 +1,4 @@
-from constants import PLAYABLE_SYMBOLS, PLAYGROUND_SIZE
-from playground import draw_playground
+from playground import Playground
 
 
 def read_user_input() -> str:
@@ -7,36 +6,36 @@ def read_user_input() -> str:
     return user_input
 
 
-def check_user_input(raw_user_input: str) -> bool:
+def check_user_input(playground_size: int, raw_user_input: str) -> bool:
     try:
         user_input = int(raw_user_input.strip())
     except ValueError:
         return False
-    if user_input in range(PLAYGROUND_SIZE ** 2 + 1):
+    if user_input in range(playground_size + 1):
         return True
     return False
 
 
-def validate_user_move(user_input: str, playground: list[str]) -> str:
-    if not check_user_input(user_input):
+def validate_user_move(playground: Playground, user_input: str) -> str:
+    if not check_user_input(len(playground.layout), user_input):
         return 'Incorrect value.'
-    elif int(user_input) and playground[int(user_input) - 1] in PLAYABLE_SYMBOLS:
+    elif int(user_input) and playground.layout[int(user_input) - 1] in playground.symbols_list():
         return 'This box is already filled.'
     return 'ok'
 
 
-def fetch_valid_user_move(playground: list[str]) -> int:
+def fetch_valid_user_move(playground: Playground) -> int:
     while True:
         user_input = read_user_input()
-        validation_message = validate_user_move(user_input, playground)
+        validation_message = validate_user_move(playground, user_input)
         if validation_message == 'ok':
             return int(user_input)
         else:
             print(validation_message, 'Please try again...')
 
 
-def output_user_move(playground: list[str], user_symbol: str, user_move: int) -> list[str]:
-    playground[user_move-1] = user_symbol
-    draw_playground(playground)
+def output_user_move(playground: Playground, user_move: int) -> Playground:
+    playground.layout[user_move-1] = playground.user_symbol
+    playground.draw_layout()
     print('Ok, got it! And now AI will make a move...')
     return playground
