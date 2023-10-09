@@ -34,9 +34,9 @@ def main() -> None:
             current_playground = output_user_move(current_playground, user_move)
         ai_turn_comes_next = not ai_turn_comes_next
         winner = win_check(current_playground)
-        if winner.value:
+        if winner is not None:
             current_playground.draw_layout()
-            print(winner.value)
+            print(winner.outro_message())
             current_playground.game_on = False
 
 

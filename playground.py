@@ -29,7 +29,7 @@ class Playground:
             if not index or index % self.row_length == 0:
                 playground_render += '\n+' + '───────+' * self.row_length + '\n│'
             playground_render += f'{box:^7}│'    
-        self.clear_screen()
+        #self.clear_screen()
         print(playground_render + '\n+' + '───────+' * self.row_length)
 
     def symbols_list(self) -> list[str]:
@@ -38,6 +38,12 @@ class Playground:
     def is_filled(self) -> bool:
         for box in self.layout:
             if box not in self.symbols_list():
+                return False
+        return True
+    
+    def is_empty(self) -> bool:
+        for symbol in self.symbols_list():
+            if self.layout.count(symbol):
                 return False
         return True
     
