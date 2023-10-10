@@ -29,8 +29,11 @@ class Playground:
             if not index or index % self.row_length == 0:
                 playground_render += '\n+' + '───────+' * self.row_length + '\n│'
             playground_render += f'{box:^7}│'    
-        #self.clear_screen()
-        print(playground_render + '\n+' + '───────+' * self.row_length)
+        self.clear_screen()
+        bottom_render = '\n+' + '=======+' * self.row_length
+        reminder_render = f'{self.user_symbol} - you ; {self.ai_symbol} - ai'
+        print(playground_render + bottom_render)
+        print(f'|{reminder_render:^{len(bottom_render) - 3}}|' + bottom_render + '\n')
 
     def symbols_list(self) -> list[str]:
         return [self.user_symbol, self.ai_symbol]

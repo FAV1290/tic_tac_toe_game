@@ -36,7 +36,7 @@ def main() -> None:
         winner = win_check(current_playground)
         if winner is not None:
             current_playground.draw_layout()
-            print(winner.outro_message())
+            print(winner.pick_outro_message())
             current_playground.game_on = False
 
 
