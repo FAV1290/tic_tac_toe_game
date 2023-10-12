@@ -1,5 +1,5 @@
 from playground import Playground
-from ai import ai_makes_a_first_move, output_ai_move
+from ai_move import ai_makes_a_first_move, output_ai_move
 from user_move import fetch_valid_user_move, output_user_move
 from win_check import win_check
 
