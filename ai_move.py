@@ -68,7 +68,7 @@ def generate_ai_move(playground: Playground) -> int | None:
         return defensive_move
     offensive_move = generate_offensive_ai_move(playground)
     if offensive_move is not None and not is_move_skipped(AI_OFFENCE_SKIP_CHANCE):
-        logging.info(f'MAKING OFFENSIVE MOVE, BOX # {playground.layout[winning_move]}')
+        logging.info(f'MAKING OFFENSIVE MOVE, BOX # {playground.layout[offensive_move]}')
         return offensive_move
     logging.info(f'MAKING RANDOM MOVE')
     return generate_random_ai_move(playground)
