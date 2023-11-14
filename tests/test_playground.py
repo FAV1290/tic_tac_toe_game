@@ -1,4 +1,4 @@
-from playground import Playground
+from game.playground import Playground
 
 
 def test_is_filled() -> None:
@@ -32,14 +32,14 @@ def test_is_empty() -> None:
     for layout, test_result in layouts_and_results:
         playground.layout = layout
         playground.row_length = len(playground.layout) ** 0.5
-        assert playground.is_empty() == test_result    
+        assert playground.is_empty() == test_result
 
 
 def test_rows_indexes_list() -> None:
     row_length_to_rows_indexes_map = {
         2: [[0, 1], [2, 3]],
         3: [[0, 1, 2], [3, 4, 5], [6, 7, 8]],
-        4: [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]],    
+        4: [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]],
     }
     for row_length, correct_rows_indexes_list in row_length_to_rows_indexes_map.items():
         test_playground = Playground(row_length=row_length)
@@ -50,7 +50,7 @@ def test_columns_indexes_list() -> None:
     row_length_to_columns_indexes_map = {
         2: [[0, 2], [1, 3]],
         3: [[0, 3, 6], [1, 4, 7], [2, 5, 8]],
-        4: [[0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15]],  
+        4: [[0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15]],
     }
     for row_length, correct_columns_indexes_list in row_length_to_columns_indexes_map.items():
         test_playground = Playground(row_length=row_length)
@@ -59,7 +59,7 @@ def test_columns_indexes_list() -> None:
 
 def test_layout_coordinates_list() -> None:
     row_length_to_layout_coordinates_map = {
-        2: [(0, 0), (1, 0), (0, 1), (1,1)],
+        2: [(0, 0), (1, 0), (0, 1), (1, 1)],
         3: [(0, 0), (1, 0), (2, 0), (0, 1), (1, 1), (2, 1), (0, 2), (1, 2), (2, 2)],
         4: [
             (0, 0), (1, 0), (2, 0), (3, 0),
@@ -67,7 +67,7 @@ def test_layout_coordinates_list() -> None:
             (0, 2), (1, 2), (2, 2), (3, 2),
             (0, 3), (1, 3), (2, 3), (3, 3),
         ],
-    }   
+    }
     for row_length, correct_coordinates_list in row_length_to_layout_coordinates_map.items():
         test_playground = Playground(row_length=row_length)
         assert test_playground.layout_coordinates_list() == correct_coordinates_list

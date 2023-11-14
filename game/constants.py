@@ -1,6 +1,6 @@
 CLEAR_SCREEN_COMMANDS_MAP = {
-    'nt' : 'cls',
-    'posix' : 'clear',
+    'nt': 'cls',
+    'posix': 'clear',
 }
 PLAYABLE_SYMBOLS = ['X', 'O']
 PLAYGROUND_ROW_LENGTH = 3

@@ -1,4 +1,4 @@
-from playground import Playground
+from game.playground import Playground
 
 
 def read_user_input() -> str:

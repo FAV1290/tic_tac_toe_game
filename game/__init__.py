@@ -1,7 +1,7 @@
-from playground import Playground
-from ai_move import ai_makes_a_first_move, output_ai_move
-from user_move import fetch_valid_user_move, output_user_move
-from win_check import win_check
+from game.win_check import win_check
+from game.playground import Playground
+from game.ai_move import ai_makes_a_first_move, output_ai_move
+from game.user_move import fetch_valid_user_move, output_user_move
 
 
 def output_start_conditions(current_playground: Playground, ai_turn_comes_next: bool) -> None:
@@ -17,9 +17,9 @@ def output_start_conditions(current_playground: Playground, ai_turn_comes_next: 
         print('AI makes the first move! Please wait a sec...')
     else:
         print('First move is yours!')
-    
 
-def main() -> None:
+
+def start_game() -> None:
     current_playground = Playground()
     ai_turn_comes_next = ai_makes_a_first_move()
     output_start_conditions(current_playground, ai_turn_comes_next)
@@ -38,7 +38,3 @@ def main() -> None:
             current_playground.draw_layout()
             print(winner.pick_outro_message())
             current_playground.game_on = False
-
-
-if __name__ == '__main__':
-    main()

@@ -1,9 +1,9 @@
-from playground import Playground
-from enums import Winner
-    
+from game.enums import Winner
+from game.playground import Playground
+
 
 def convert_indexes_list_into_values_list(
-    indexes_list: list[list[int]], 
+    indexes_list: list[list[int]],
     layout: list[str]
 ) -> list[list[str]]:
     values_list = []
@@ -39,7 +39,7 @@ def is_suitable_for_win_streak(layout_element: list[str], playground: Playground
         if playground.win_streak in [hypothetic_user_streak, hypothetic_ai_streak]:
             return True
     return False
-    
+
 
 def check_if_winner_defined(layout_element: list[str], playground: Playground) -> Winner | None:
     user_streak, ai_streak = 0, 0
@@ -59,14 +59,14 @@ def check_if_winner_defined(layout_element: list[str], playground: Playground) -
 
 def win_check(playground: Playground) -> Winner | None:
     win_possibilities_count = 0
-    for layout_element in sum_playground_elements_values_lists(playground): 
+    for layout_element in sum_playground_elements_values_lists(playground):
         if len(layout_element) < playground.win_streak:
             continue
         winner = check_if_winner_defined(layout_element, playground)
         if winner is not None:
             return winner
         if is_suitable_for_win_streak(layout_element, playground):
-            win_possibilities_count += 1  
+            win_possibilities_count += 1
     if not win_possibilities_count:
         return Winner.TIE
     return None

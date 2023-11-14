@@ -1,11 +1,10 @@
-from enums import Winner
-from playground import Playground
-from win_check import (
-    convert_indexes_list_into_values_list,
-    sum_playground_elements_values_lists, 
+from game.enums import Winner
+from game.playground import Playground
+from game.win_check import (
     is_suitable_for_win_streak,
-    check_if_winner_defined,
-    win_check,
+    win_check, check_if_winner_defined,
+    convert_indexes_list_into_values_list,
+    sum_playground_elements_values_lists,
 )
 
 
@@ -29,7 +28,7 @@ def test_convert_indexes_list_into_values_list() -> None:
     for index in range(len(indexes_lists)):
         test_answer = convert_indexes_list_into_values_list(indexes_lists[index], layout)
         correct_answer = correct_answers[index]
-        assert test_answer == correct_answer 
+        assert test_answer == correct_answer
 
 
 def test_sum_playground_elements_values_lists() -> None:
@@ -95,11 +94,11 @@ def test_win_check() -> None:
         ([user_symbol, user_symbol, '3', user_symbol, '5', '6', '7', '8', '9'], 3, 3, None),
         ([
             '1', ai_symbol, user_symbol,
-            user_symbol, ai_symbol, ai_symbol, 
+            user_symbol, ai_symbol, ai_symbol,
             ai_symbol, user_symbol, user_symbol,
         ], 3, 3, Winner.TIE),
         ([
-            ai_symbol, user_symbol, ai_symbol, 
+            ai_symbol, user_symbol, ai_symbol,
             user_symbol, ai_symbol, user_symbol,
             user_symbol, ai_symbol, user_symbol,
         ], 3, 3, Winner.TIE),

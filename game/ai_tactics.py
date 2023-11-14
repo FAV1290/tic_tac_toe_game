@@ -1,4 +1,4 @@
-from playground import Playground
+from game.playground import Playground
 
 
 def sum_playground_elements_indexes_lists(playground: Playground) -> list[list[int]]:
@@ -18,7 +18,7 @@ def create_win_streak_slices_list(playground: Playground) -> list[list[int]]:
             continue
         for start_index in range(0, len(playground_element) - win_streak + 1):
             win_streak_slices.append(playground_element[start_index:start_index + win_streak])
-    return win_streak_slices          
+    return win_streak_slices
 
 
 def filter_blank_boxes_indexes(playground: Playground, slice: list[int]) -> list[int]:
@@ -30,7 +30,7 @@ def find_winning_indexes(
     slice: list[int],
     filled_by_user: int,
     filled_by_ai: int,
-) -> list[int] | None:  
+) -> list[int] | None:
     winning_indexes = None
     if not filled_by_user and filled_by_ai == playground.win_streak - 1:
         winning_indexes = filter_blank_boxes_indexes(playground, slice)
@@ -42,18 +42,18 @@ def find_check_breaking_indexes(
     slice: list[int],
     filled_by_user: int,
     filled_by_ai: int,
-) -> list[int] | None: 
+) -> list[int] | None:
     check_breaking_indexes = None
     if not filled_by_ai and filled_by_user == playground.win_streak - 1:
         check_breaking_indexes = filter_blank_boxes_indexes(playground, slice)
-    return check_breaking_indexes 
+    return check_breaking_indexes
 
 
 def find_suitable_for_offence_indexes_in_slice(
     playground: Playground,
     slice: list[int],
     filled_by_user: int,
-) -> list[int] | None: 
+) -> list[int] | None:
     offensive_indexes = None
     if not filled_by_user:
         offensive_indexes = filter_blank_boxes_indexes(playground, slice)
@@ -62,9 +62,9 @@ def find_suitable_for_offence_indexes_in_slice(
 
 def find_notable_indexes(playground: Playground) -> dict[str, list[int] | None]:
     notable_indexes: dict[str, list[int] | None] = {
-        'offensive' : [],
-        'defensive' : [],
-        'winning' : [],
+        'offensive': [],
+        'defensive': [],
+        'winning': [],
     }
     for slice in create_win_streak_slices_list(playground):
         slice_layout = list(map(lambda index: playground.layout[index], slice))
@@ -85,4 +85,4 @@ def find_notable_indexes(playground: Playground) -> dict[str, list[int] | None]:
     for move_type, indexes_list in notable_indexes.items():
         if not indexes_list:
             notable_indexes[move_type] = None
-    return notable_indexes   
+    return notable_indexes

@@ -4,9 +4,9 @@ import logging
 import collections
 
 
-from playground import Playground
-from ai_tactics import find_notable_indexes
-from constants import (
+from game.playground import Playground
+from game.ai_tactics import find_notable_indexes
+from game.constants import (
     BRAINSTORM_MIN_SEC, BRAINSTORM_MAX_SEC,
     AI_LOGFILE_FILEPATH, AI_LOGGING_FORMAT,
     AI_WIN_SKIP_CHANCE, AI_DEFENCE_SKIP_CHANCE, AI_OFFENCE_SKIP_CHANCE)
@@ -53,7 +53,7 @@ def generate_random_ai_move(playground: Playground) -> int | None:
     return ai_move
 
 
-def is_move_skipped(substitution_chance):
+def is_move_skipped(substitution_chance: int) -> bool:
     return random.randint(1, 100) in range(0, substitution_chance)
 
 
@@ -70,7 +70,7 @@ def generate_ai_move(playground: Playground) -> int | None:
     if offensive_move is not None and not is_move_skipped(AI_OFFENCE_SKIP_CHANCE):
         logging.info(f'MAKING OFFENSIVE MOVE, BOX # {playground.layout[offensive_move]}')
         return offensive_move
-    logging.info(f'MAKING RANDOM MOVE')
+    logging.info('MAKING RANDOM MOVE')
     return generate_random_ai_move(playground)
 
 
