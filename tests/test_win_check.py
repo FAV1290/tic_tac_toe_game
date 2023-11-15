@@ -82,33 +82,32 @@ def test_win_check() -> None:
     user_symbol = test_playground.user_symbol
     ai_symbol = test_playground.ai_symbol
     test_params_list = [
-        (['1', '2', '3', '4'], 2, 2, None),
-        ([ai_symbol, ai_symbol, '3', '4'], 2, 2, Winner.AI),
-        ([user_symbol, '2', '3', user_symbol], 2, 2, Winner.USER),
-        (['1', user_symbol, ai_symbol, '4'], 2, 2, None),
-        ([ai_symbol, ai_symbol, ai_symbol, ai_symbol], 2, 2, Winner.AI),
-        ([ai_symbol, '2', ai_symbol, '4'], 2, 2, Winner.AI),
-        ([user_symbol, user_symbol, user_symbol, '4', '5', '6', '7', '8', '9'], 3, 3, Winner.USER),
-        (['1', ai_symbol, '3', '4', ai_symbol, '6', '7', ai_symbol, '9'], 3, 3, Winner.AI),
-        (['1', '2', user_symbol, '4', user_symbol, '6', user_symbol, '8', '9'], 3, 3, Winner.USER),
-        ([user_symbol, user_symbol, '3', user_symbol, '5', '6', '7', '8', '9'], 3, 3, None),
+        (['1', '2', '3', '4'], 2, None),
+        ([ai_symbol, ai_symbol, '3', '4'], 2, Winner.AI),
+        ([user_symbol, '2', '3', user_symbol], 2, Winner.USER),
+        (['1', user_symbol, ai_symbol, '4'], 2, None),
+        ([ai_symbol, ai_symbol, ai_symbol, ai_symbol], 2, Winner.AI),
+        ([ai_symbol, '2', ai_symbol, '4'], 2, Winner.AI),
+        ([user_symbol, user_symbol, user_symbol, '4', '5', '6', '7', '8', '9'], 3, Winner.USER),
+        (['1', ai_symbol, '3', '4', ai_symbol, '6', '7', ai_symbol, '9'], 3, Winner.AI),
+        (['1', '2', user_symbol, '4', user_symbol, '6', user_symbol, '8', '9'], 3, Winner.USER),
+        ([user_symbol, user_symbol, '3', user_symbol, '5', '6', '7', '8', '9'], 3, None),
         ([
             '1', ai_symbol, user_symbol,
             user_symbol, ai_symbol, ai_symbol,
             ai_symbol, user_symbol, user_symbol,
-        ], 3, 3, Winner.TIE),
+        ], 3, Winner.TIE),
         ([
             ai_symbol, user_symbol, ai_symbol,
             user_symbol, ai_symbol, user_symbol,
             user_symbol, ai_symbol, user_symbol,
-        ], 3, 3, Winner.TIE),
-        (['1', '2', ai_symbol, '4', ai_symbol, '6', '7', '8', '9'], 3, 2, Winner.AI),
-        ([user_symbol, '2', '3', '4', '5', '6', user_symbol, '8', '9'], 3, 2, None),
-        (['1', '2', '3', user_symbol, '5', '6', user_symbol, '8', '9'], 3, 2, Winner.USER),
+        ], 3, Winner.TIE),
+        (['1', '2', ai_symbol, '4', ai_symbol, '6', '7', '8', '9'], 2, Winner.AI),
+        ([user_symbol, '2', '3', '4', '5', '6', user_symbol, '8', '9'], 2, None),
+        (['1', '2', '3', user_symbol, '5', '6', user_symbol, '8', '9'], 2, Winner.USER),
     ]
     for test_params in test_params_list:
-        layout, row_length, win_streak, correct_result = test_params
+        layout, win_streak, correct_result = test_params
         test_playground.layout = layout
-        test_playground.row_length = row_length
         test_playground.win_streak = win_streak
         assert win_check(test_playground) == correct_result

@@ -2,7 +2,7 @@ from game.playground import Playground
 
 
 def test_is_filled() -> None:
-    playground = Playground(row_length=3)
+    playground = Playground()
     layouts_and_results = [
         (['(1)', '(2)', '(3)', '(4)', '(5)', '(6)', '(7)', '(8)', '(9)'], False),
         ([playground.ai_symbol] * 9, True),
@@ -14,12 +14,11 @@ def test_is_filled() -> None:
     ]
     for layout, test_result in layouts_and_results:
         playground.layout = layout
-        playground.row_length = len(playground.layout) ** 0.5
         assert playground.is_filled() == test_result
 
 
 def test_is_empty() -> None:
-    playground = Playground(row_length=3)
+    playground = Playground()
     layouts_and_results = [
         (['(1)', '(2)', '(3)', '(4)', '(5)', '(6)', '(7)', '(8)', '(9)'], True),
         ([playground.ai_symbol] * 9, False),
@@ -31,7 +30,6 @@ def test_is_empty() -> None:
     ]
     for layout, test_result in layouts_and_results:
         playground.layout = layout
-        playground.row_length = len(playground.layout) ** 0.5
         assert playground.is_empty() == test_result
 
 

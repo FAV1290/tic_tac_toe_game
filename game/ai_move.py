@@ -15,10 +15,6 @@ from game.constants import (
 logging.basicConfig(filename=AI_LOGFILE_FILEPATH, level=logging.INFO, format=AI_LOGGING_FORMAT)
 
 
-def ai_makes_a_first_move() -> bool:
-    return random.choice([True, False])
-
-
 def toggle_ai_brainstorm() -> None:
     time.sleep(random.randint(BRAINSTORM_MIN_SEC, BRAINSTORM_MAX_SEC))
 
@@ -76,7 +72,7 @@ def generate_ai_move(playground: Playground) -> int | None:
 
 def output_ai_move(playground: Playground) -> Playground:
     ai_move = generate_ai_move(playground)
-    if ai_move is not None:
+    if ai_move:
         playground.layout[ai_move] = playground.ai_symbol
         toggle_ai_brainstorm()
         playground.draw_layout()
