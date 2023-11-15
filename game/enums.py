@@ -1,4 +1,6 @@
 import enum
+import typing
+import random
 
 
 class Winner(enum.Enum):
@@ -13,3 +15,16 @@ class Winner(enum.Enum):
             'ai': 'Bad news! AI wins!',
         }
         return winner_to_outro_map[self.value]
+
+
+class CurrentTurn(enum.IntEnum):
+    AI: int = 0
+    USER: int = 1
+
+    @classmethod
+    def choose_random(cls) -> typing.Self:
+        return random.choice(list(cls))
+
+    @classmethod
+    def switch_player(cls, instance: typing.Self) -> typing.Self:
+        return cls(not instance)
