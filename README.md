@@ -15,8 +15,8 @@ Classic Tic-Tac-Toe game with customizable field size in your terminal:
 ## Project setup
 + Clone repo: `https://github.com/FAV1290/tic_tac_toe_game`
 + Open repo catalog and install requirements: `pip install -r requirements.txt`
-+ Change field or win streak size in `game\constants.py` (parameters `PLAYGROUND_ROW_LENGTH` and `WIN_STREAK`): 
 + Start game: `python main.py`
++ (Optional) set field or win streak size in `game\constants.py` (params `PLAYGROUND_ROW_LENGTH` and `WIN_STREAK`): 
 + Good luck!
 
 ## How does it look?

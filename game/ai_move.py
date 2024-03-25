@@ -72,7 +72,7 @@ def generate_ai_move(playground: Playground) -> int | None:
 
 def output_ai_move(playground: Playground) -> Playground:
     ai_move = generate_ai_move(playground)
-    if ai_move:
+    if ai_move is not None:
         playground.layout[ai_move] = playground.ai_symbol
         toggle_ai_brainstorm()
         playground.draw_layout()
