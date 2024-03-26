@@ -19,6 +19,10 @@ Classic Tic-Tac-Toe game with customizable field size in your terminal:
 + (Optional) set field or win streak size in `game\constants.py` (params `PLAYGROUND_ROW_LENGTH` and `WIN_STREAK`): 
 + Good luck!
 
+## To run via Docker
++ Create image: `docker build --tag tic_tac_toe:latest`
++ Run image in interactive mode: `docker run -it tic_tac_toe:latest`
+
 ## How does it look?
 <img src='readme_assets\screenshot1.png'/>
 <img src='readme_assets\screenshot2.png'/>
